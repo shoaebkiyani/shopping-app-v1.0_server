@@ -1,9 +1,12 @@
 package com.springsecurity.springsecurity.user;
 
+import com.springsecurity.springsecurity.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,10 @@ import java.util.Map;
 @CrossOrigin("*")
 public class UserController {
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtils jwtUtils;
     @Autowired
     private UserService userService;
     @Autowired
@@ -50,6 +57,26 @@ public class UserController {
                 map.put("status", HttpStatusCode.valueOf(201));
                 map.put("message", newUser.getUsername() + " created successfully");
                 return new ResponseEntity<>(map, HttpStatus.CREATED);
+            }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody AuthRequest authRequest){
+        Map<String, Object> map = new HashMap<>();
+            if (userService.wrongUsername(authRequest.getUsername())) {
+                map.put("error", HttpStatusCode.valueOf(401));
+                map.put("message", "Invalid username and/or password");
+                return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+            } else {
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                authRequest.getUsername(),
+                                authRequest.getPassword()
+                        )
+                );
+                User user = userRepository.findByUsername(authRequest.getUsername());
+                map.put("token", userService.loginUser(user));
+                return new ResponseEntity<>(map, HttpStatus.OK);
             }
     }
 }
