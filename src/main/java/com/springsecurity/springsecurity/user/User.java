@@ -10,8 +10,8 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-@Entity(name="user")
-@Table(name="customer")
+@Entity(name = "user")
+@Table(name = "customer")
 public class User {
     @Id
     @GeneratedValue
@@ -21,11 +21,21 @@ public class User {
     @Column(unique = true)
     private String username;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    public User(String username, String password) {
+
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
+        this.role = role;
+    }
+
+    public enum Role {
+        USER,
+        ADMIN
     }
 }

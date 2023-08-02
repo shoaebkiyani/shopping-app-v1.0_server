@@ -1,19 +1,27 @@
 package com.springsecurity.springsecurity.securityConfig;
 
+import com.springsecurity.springsecurity.filters.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -21,9 +29,6 @@ public class SecurityConfig {
     ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,37 +38,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/register", "/api/v1/login")
                 .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/users")
-                .permitAll()
+                .requestMatchers("/api/v1/users").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic(withDefaults()).formLogin();
-//                .csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/api/v1/register")
-//                .permitAll()
-//                .and()
-//                .authorizeHttpRequests()
-//                .requestMatchers(HttpMethod.GET, "/api/v1/users")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin();
-
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .httpBasic(withDefaults()).formLogin()
+                .and()
+                // Add JWT token filter
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
