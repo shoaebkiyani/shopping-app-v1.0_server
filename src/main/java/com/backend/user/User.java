@@ -1,4 +1,4 @@
-package com.springsecurity.springsecurity.user;
+package com.backend.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

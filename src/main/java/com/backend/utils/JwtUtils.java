@@ -1,6 +1,6 @@
-package com.springsecurity.springsecurity.utils;
+package com.backend.utils;
 
-import com.springsecurity.springsecurity.user.User;
+import com.backend.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,6 +1,6 @@
-package com.springsecurity.springsecurity.user;
+package com.backend.user;
 
-import com.springsecurity.springsecurity.utils.JwtUtils;
+import com.backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

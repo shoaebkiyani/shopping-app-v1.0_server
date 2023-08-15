@@ -1,7 +1,7 @@
-package com.springsecurity.springsecurity.filters;
+package com.backend.filters;
 
-import com.springsecurity.springsecurity.securityConfig.CustomUserDetailsService;
-import com.springsecurity.springsecurity.utils.JwtUtils;
+import com.backend.securityConfig.CustomUserDetailsService;
+import com.backend.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

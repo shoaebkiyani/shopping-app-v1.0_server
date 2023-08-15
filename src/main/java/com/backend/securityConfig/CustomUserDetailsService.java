@@ -1,7 +1,7 @@
-package com.springsecurity.springsecurity.securityConfig;
+package com.backend.securityConfig;
 
-import com.springsecurity.springsecurity.user.User;
-import com.springsecurity.springsecurity.user.UserRepository;
+import com.backend.user.User;
+import com.backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

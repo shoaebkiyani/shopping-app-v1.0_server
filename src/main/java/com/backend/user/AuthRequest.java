@@ -1,4 +1,4 @@
-package com.springsecurity.springsecurity.user;
+package com.backend.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

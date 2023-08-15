@@ -1,6 +1,6 @@
-package com.springsecurity.springsecurity.user;
+package com.backend.user;
 
-import com.springsecurity.springsecurity.utils.JwtUtils;
+import com.backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +23,12 @@ public class UserService {
         User nonExistingUser = userRepository.findByUsername(username);
         return nonExistingUser == null;
     }
+
     public List<User> allUsers() {
         return userRepository.findAll();
     }
 
-    public void createUser(User user){
+    public void createUser(User user) {
         userRepository.save(user);
     }
 
