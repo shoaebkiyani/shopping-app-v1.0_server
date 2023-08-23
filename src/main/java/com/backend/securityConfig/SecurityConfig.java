@@ -43,9 +43,19 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/register", "/api/v1/login")
+                .requestMatchers("/api/v1/register", "/api/v1/login",
+                        "/api/v1/products",
+                        "/api/v1/single-product/{id}",
+                        "/api/v1/category")
                 .permitAll()
-                .requestMatchers("/api/v1/users", "/api/v1/user/{id}").hasRole("ADMIN")
+                .requestMatchers("/api/v1/users", "/api/v1/user/{id}",
+                        "/api/v1/add-product",
+                        "/api/v1/edit-product/{id}",
+                        "/api/v1/delete-product/{id}",
+                        "/api/v1/add-category",
+                        "/api/v1/edit-category/{id}",
+                        "/api/v1/delete-category/{id}"
+                ).hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
