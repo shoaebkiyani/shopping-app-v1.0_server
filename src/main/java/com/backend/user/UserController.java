@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-@RestController
+@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("api/v1")
-@CrossOrigin("*")
+@RestController
 public class UserController {
 
     @Autowired
@@ -42,6 +43,22 @@ public class UserController {
             map.put("status", HttpStatusCode.valueOf(404));
             map.put("message", "No user found");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+        Map<String, Object> map = new HashMap<>();
+        if (!userService.findUserById(id)) {
+            map.put("error", HttpStatusCode.valueOf(400));
+            map.put("message", "Invalid details");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        } else {
+            userService.deleteUser(id);
+            map.put("status", HttpStatusCode.valueOf(200));
+            map.put("message", "record deleted successfully");
+            return getAllUsers();
+//            return new ResponseEntity<>(map, HttpStatus.ACCEPTED);
         }
     }
 
