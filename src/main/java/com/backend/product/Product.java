@@ -21,7 +21,7 @@ public class Product {
     private String description;
     private String imageURL;
     private double price;
-    private int stock;
+    private boolean inStock;
     private int quantity;
 
 
@@ -29,12 +29,12 @@ public class Product {
     private Category category;
 
     public Product(String title, String description, String imageURL, double price,
-                   int stock, int quantity, Category category) {
+                   boolean inStock, int quantity, Category category) {
         this.title = title;
         this.description = description;
         this.imageURL = imageURL;
         this.price = price;
-        this.stock = stock;
+        this.inStock = inStock;
         this.quantity = quantity;
         this.category = category;
     }

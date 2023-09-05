@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
 @CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("api/v1")
+@RestController
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -39,6 +39,7 @@ public class ProductController {
         UUID categoryId = productDTO.getCategoryId();
         Category category = categoryRepository.findById(categoryId).orElse(null);
         Product product = productMapper.toProduct(productDTO, category);
+        product.setInStock(product.getQuantity() >= 1);
         return productService.createProduct(product);
     }
 

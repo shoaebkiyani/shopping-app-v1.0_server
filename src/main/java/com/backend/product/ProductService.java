@@ -30,10 +30,11 @@ public class ProductService {
             return null;
         }
         updateProduct.setTitle(product.getTitle());
-//        updateProduct.setDescription(product.getDescription());
-//        updateProduct.setImageURL(product.getImageURL());
-//        updateProduct.setPrice(product.getPrice());
-//        updateProduct.setQuantity(product.getQuantity());
+        updateProduct.setCategory(product.getCategory());
+        updateProduct.setDescription(product.getDescription());
+        updateProduct.setImageURL(product.getImageURL());
+        updateProduct.setPrice(product.getPrice());
+        updateProduct.setQuantity(product.getQuantity());
         return productRepository.save(updateProduct);
     }
 
