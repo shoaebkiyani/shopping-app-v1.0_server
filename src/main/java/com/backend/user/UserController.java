@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 //@CrossOrigin(origins = "http://localhost:5173/")
-@CrossOrigin(origins = "https://techzoneapi.netlify.app/")
+@CrossOrigin(origins = {"https://techzoneapi.netlify.app/", "http://localhost:5173/"})
 @RequestMapping("api/v1")
 @RestController
 public class UserController {
