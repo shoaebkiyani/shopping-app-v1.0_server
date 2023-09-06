@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
+//@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = "https://techzoneapi.netlify.app/")
 @RequestMapping("api/v1")
 public class CategoryController {
     @Autowired
