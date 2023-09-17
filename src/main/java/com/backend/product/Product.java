@@ -24,7 +24,6 @@ public class Product {
     private boolean inStock;
     private int quantity;
 
-
     @ManyToOne(optional = false)
     private Category category;
 

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
 //@CrossOrigin(origins = "http://localhost:5173/")
 @CrossOrigin(origins = {"https://techzoneapi.netlify.app/", "http://localhost:5173/"})
 @RequestMapping("api/v1")
+@RestController
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

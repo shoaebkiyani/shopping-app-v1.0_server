@@ -46,7 +46,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/register", "/api/v1/login",
                         "/api/v1/products",
                         "/api/v1/single-product/{id}",
-                        "/api/v1/category")
+                        "/api/v1/category",
+                        "/api/v1/cart",
+                        "/api/v1/cart/{productId}",
+                        "/api/v1/cart/{itemId}")
                 .permitAll()
                 .requestMatchers("/api/v1/users", "/api/v1/user/{id}",
                         "/api/v1/add-product",
