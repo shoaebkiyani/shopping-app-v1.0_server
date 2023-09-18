@@ -1,4 +1,4 @@
-package com.backend.cart;
+package com.backend.cartItem;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

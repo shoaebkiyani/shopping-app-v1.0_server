@@ -1,10 +1,8 @@
 package com.backend.cart;
 
-import com.backend.product.ProductRepository;
-import com.backend.product.ProductService;
+import com.backend.cartItem.AddToCartDTO;
+import com.backend.cartItem.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,24 +15,20 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @GetMapping("/cart")
-    public ResponseEntity<List<Cart>> getAllItems() {
-        return new ResponseEntity<List<Cart>>(cartService.getAllItems(), HttpStatus.OK);
+    @GetMapping("/cart/{cartId}")
+    public List<CartItem> getAllItems(@PathVariable UUID cartId) {
+        return cartService.getAllItems(cartId);
     }
 
-    @PostMapping("/cart/{productId}")
-    public Cart addToCart(@RequestBody AddToCartDTO quantity, @PathVariable(name = "productId") UUID productId) {
-        return cartService.addToCart(quantity, productId);
+    @PostMapping("/cart")
+    public Cart createCart() {
+        return cartService.createCart();
     }
 
-    @DeleteMapping("/cart/{itemId}")
-    public void deleteCartItem(@PathVariable UUID itemId) {
-        cartService.deleteCartItem(itemId);
+    @PostMapping("/cart/add-to-cart/{cartId}/{productId}")
+    public CartItem addToCart(@RequestBody AddToCartDTO quantity, @PathVariable UUID cartId,
+                              @PathVariable UUID productId
+    ) {
+        return cartService.addToCart(quantity, cartId, productId);
     }
 }
