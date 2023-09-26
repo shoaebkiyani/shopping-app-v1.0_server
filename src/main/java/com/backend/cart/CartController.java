@@ -15,20 +15,24 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/cart/{cartId}")
-    public List<CartItem> getAllItems(@PathVariable UUID cartId) {
-        return cartService.getAllItems(cartId);
+    @GetMapping("/cart")
+    public List<Cart> getAllItems() {
+        return cartService.getAllItems();
     }
 
-    @PostMapping("/cart")
+    @PostMapping("/cart/create-cart")
     public Cart createCart() {
         return cartService.createCart();
     }
 
-    @PostMapping("/cart/add-to-cart/{cartId}/{productId}")
-    public CartItem addToCart(@RequestBody AddToCartDTO quantity, @PathVariable UUID cartId,
-                              @PathVariable UUID productId
-    ) {
-        return cartService.addToCart(quantity, cartId, productId);
+    @PostMapping("/cart/add-to-cart/{productId}")
+    public CartItem addToCart(@RequestBody AddToCartDTO quantity,
+                              @PathVariable UUID productId) {
+        return cartService.addToCart(quantity, productId);
+    }
+
+    @DeleteMapping("/cart/delete-item/{itemId}")
+    public List<CartItem> deleteCartItem(@PathVariable UUID itemId) {
+        return cartService.deleteCartItem(itemId);
     }
 }

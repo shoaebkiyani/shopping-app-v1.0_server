@@ -48,8 +48,11 @@ public class SecurityConfig {
                         "/api/v1/single-product/{id}",
                         "/api/v1/category",
                         "/api/v1/cart",
-                        "/api/v1/cart/{cartId}",
-                        "/api/v1/cart/add-to-cart/{cartId}/{productId}")
+                        "/api/v1/cart/create-cart",
+                        "/api/v1/cart/add-to-cart/{productId}",
+                        "/api/v1/cart/delete-item/{itemId}",
+                        "/api/v1/order",
+                        "/api/v1/order/place-order/{cartId}")
                 .permitAll()
                 .requestMatchers("/api/v1/users", "/api/v1/user/{id}",
                         "/api/v1/add-product",
