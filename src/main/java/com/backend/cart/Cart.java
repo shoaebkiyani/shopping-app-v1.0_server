@@ -2,6 +2,7 @@ package com.backend.cart;
 
 import com.backend.cartItem.CartItem;
 import com.backend.placeOrder.PlaceOrder;
+import com.backend.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,11 +25,16 @@ public class Cart {
     private List<CartItem> cartItems;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne
     @JoinColumn(name = "orders_id")
     private PlaceOrder placeOrder;
 
-    public Cart(List<CartItem> cartItems, PlaceOrder placeOrder) {
+    public Cart(List<CartItem> cartItems, User user, PlaceOrder placeOrder) {
         this.cartItems = cartItems;
+        this.user = user;
         this.placeOrder = placeOrder;
     }
 }

@@ -7,6 +7,7 @@ import com.backend.exceptions.productNotFoundException.ProductNotFoundException;
 import com.backend.exceptions.quantityLimitExceptions.QuantityLimitNotFoundException;
 import com.backend.product.Product;
 import com.backend.product.ProductRepository;
+import com.backend.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CartService {
@@ -27,6 +27,9 @@ public class CartService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Cart createCart() {
         List<Cart> carts = cartRepository.findAll();
@@ -41,17 +44,17 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public List<Cart> getAllItems() throws RuntimeException {
-        List<Cart> cartItemsList = cartRepository.findAll();
-        if (cartItemsList.isEmpty()) {
-            throw new ProductNotFoundException("Cart could not be found");
-        }
-        cartItemsList.stream().map(Cart::getCartItems).collect(Collectors.toList());
-        return cartItemsList;
-    }
-//    public List<CartItem> getAllItems() throws RuntimeException {
-//        return cartItemRepository.findAll();
+    //    public List<Cart> getAllItems() throws RuntimeException {
+//        List<Cart> cartItemsList = cartRepository.findAll();
+//        if (cartItemsList.isEmpty()) {
+//            throw new ProductNotFoundException("Cart could not be found");
+//        }
+//        cartItemsList.stream().map(Cart::getCartItems).collect(Collectors.toList());
+//        return cartItemsList;
 //    }
+    public List<CartItem> getAllItems() throws RuntimeException {
+        return cartItemRepository.findAll();
+    }
 
     public CartItem addToCart(AddToCartDTO addToCartDTO, UUID productId) throws RuntimeException {
 
@@ -111,6 +114,15 @@ public class CartService {
             }
         }
         return false;
+    }
+
+    public CartItem updateCartItem(AddToCartDTO addToCartDTO, UUID itemId) throws RuntimeException {
+        CartItem cartItem = cartItemRepository.findById(itemId).orElseThrow(() -> new ProductNotFoundException("Item " +
+                "not found"));
+        Product product = cartItem.getProduct();
+        cartItem.setQuantity(addToCartDTO.getQuantity());
+        cartItem.setTotalPrice(addToCartDTO.getQuantity() * product.getPrice());
+        return cartItemRepository.save(cartItem);
     }
 
     public List<CartItem> deleteCartItem(UUID itemId) {

@@ -48,6 +48,7 @@ public class SecurityConfig {
                         "/api/v1/single-product/{id}",
                         "/api/v1/category",
                         "/api/v1/cart",
+                        "/api/v1/cart/{itemId}",
                         "/api/v1/cart/create-cart",
                         "/api/v1/cart/add-to-cart/{productId}",
                         "/api/v1/cart/delete-item/{itemId}",

@@ -16,7 +16,7 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("/cart")
-    public List<Cart> getAllItems() {
+    public List<CartItem> getAllItems() {
         return cartService.getAllItems();
     }
 
@@ -29,6 +29,11 @@ public class CartController {
     public CartItem addToCart(@RequestBody AddToCartDTO quantity,
                               @PathVariable UUID productId) {
         return cartService.addToCart(quantity, productId);
+    }
+
+    @PutMapping("/cart/{itemId}")
+    public CartItem updateCartItem(@RequestBody AddToCartDTO quantity, @PathVariable UUID itemId) {
+        return cartService.updateCartItem(quantity, itemId);
     }
 
     @DeleteMapping("/cart/delete-item/{itemId}")
